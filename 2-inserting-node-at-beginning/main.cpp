@@ -2,40 +2,37 @@
 
 using namespace std;
 
-void insert(int x);
-void print();
-
 struct Node
 {
   int data;
   Node *next;
 };
 
-Node *head{nullptr}; // global variable, can be accessed anywhere
+void insert(Node **ptr_head, int x);
+void print(Node *head);
 
-void insert(int x)
+void insert(Node **ptr_head, int x)
 {
   Node *temp = new Node;
   temp->data = x;
-  temp->next = head;
-  head = temp;
+  temp->next = *ptr_head;
+  *ptr_head = temp;
 }
 
-void print()
+void print(Node *head)
 {
-  Node *temp = head;
   cout << "List is: ";
-  while (temp != nullptr)
+  while (head != nullptr)
   {
-    cout << temp->data << " ";
-    temp = temp->next;
+    cout << head->data << " ";
+    head = head->next;
   }
   cout << endl;
 }
 
 int main()
 {
-  head = nullptr; // empty list
+  Node *head{nullptr}; // local variable
 
   cout << "How many numbers? ";
   int n;
@@ -47,7 +44,7 @@ int main()
          << "Enter the number: ";
     int x;
     cin >> x;
-    insert(x);
-    print();
+    insert(&head, x);
+    print(head);
   }
 }
